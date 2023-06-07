@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    
+    <div id ="container">
+        
+        <header id = "intro">
+            <div id = "logo">
+                <div class="titlemainlogo">
+                    <div class="logotitle">
+                      <img class="yumlogo" src="images/yum1.jpg">
+                      <h2 class="page-title">Yummiverse</h2>
+                      <img class="yumlogo" src="images/yum1.jpg">
+                    </div>
+                  </div>
+            </div>
+            <div id = "profile">
+                <div id = "checkmypro">  
+                    <p class="minimbti"></p><!--여기에 개인 엠비티아이 정보-->
+                </div>
+            </div>
+            <div class="foodmbti">
+                <a class="reviewww" href="http://localhost:50000/foodmbti.html">음식 mbti 상세 👆</a>
+            </div>    
+        </header>
+        <div class="reviewdiv">
+            <a class="reviewww" href="http://localhost:50000/reviewPage.html">레시피 리뷰 게시판&nbsp&nbsp&nbsp</a>
+        </div>
+        <div id ="main">
+            <div id="filter">
+                <form class="filterdiv aa">
+                    <div>
+                      <button id="weatherButton" onclick="getWeatherInfo()" type="button" class="w-100 btn btn-lg btn-outline-primary">추천받기!</button>
+                    </div>
+                </form>
+            </div>
+            <div class="rrr">
+                <div id = "results" class="results">
+                    <!--추천되는 곳-->
+                    <div class="itemrecom" id = "rec0">
+                        
+                    </div>
+                    <div class="itemrecom" id = "rec1">
+                        
+                    </div>
+                    <div class="itemrecom" id = "rec2">
+                        
+                    </div>
+    
+                </div>
+                <div class="sharebtnbox">
+                    <div class="btnshare">
+                        <button onclick="modalOpen('Add')" type="button" class="btn btn-primary">리뷰 작성</button>
+                        <div class="modal-backdrop"></div>
+                        <div w3-include-html="./modal.html"></div>
+                        <script type="text/javascript" src="./board.js"></script>                        
+                    </div>
+                    <div class="btnshare">
+                        <button onclick="modalOpen('Add')" type="button" class="btn btn-primary">리뷰 작성</button>
+                        <div class="modal-backdrop"></div>
+                        <div w3-include-html="./modal.html"></div>
+                        <script type="text/javascript" src="./board.js"></script>                        
+                    </div>
+                    <div class="btnshare">
+                        <button onclick="modalOpen('Add')" type="button" class="btn btn-primary">리뷰 작성</button>
+                        <div class="modal-backdrop"></div>
+                        <div w3-include-html="./modal.html"></div>
+                        <script type="text/javascript" src="./board.js"></script>                        
+                    </div>
+                </div>
+            </div>       
+            
+        </div>
+      </div>          
+        
+  <div id="result"></div>
+  <div id="nxny"></div>
+  <div id="pay"></div>
+
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+  <script>
+    function getWeatherInfo() {
+      var weatherButton = document.getElementById("weatherButton");
+
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          var nx = parseInt(latitude, 10);
+          var ny = parseInt(longitude, 10);
+
+          const villageWeatherUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?";
+          const serviceKey = "fKIAUimoXsQG2qWxxgMYaAyeifCXgeEqihWVX2AedUJgd4h%2Bu%2BscaKq3DUSik6vE%2FwbRzFou8nQ4sb7GPX4OBg%3D%3D";
+          const baseDate = moment().format("YYYYMMDD"); 
+          const baseTime = "0800";
+
+          const payload = `serviceKey=${serviceKey}&dataType=json&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}`;
+
+          axios.get(villageWeatherUrl + payload)
+            .then(response => {
+              const items = response.data.response.body.items.item;
+
+              let weatherData = {};
+              for (let i = 0; i < items.length; i++) {
+                let item = items[i];
+
+                if (item['category'] === 'TMP') {
+                  let weatherTmp = item['fcstValue'];
+                  let weatherWhat;
+
+                  if (weatherTmp >= 25) {
+                    weatherWhat = '더운';
+                  } else if (weatherTmp <= 5) {
+                    weatherWhat = '추운';
+                  } else {
+                    weatherWhat = '따듯한';
+                  }
+
+                  weatherData['What'] = weatherWhat;
+                }
+
+                if (item['category'] === 'PTY') {
+                  let weatherCode = item['fcstValue'];
+                  let weatherState;
+
+                  switch (weatherCode) {
+                    case '1':
+                      weatherState = '비';
+                      break;
+                    case '2':
+                      weatherState = '비 눈';
+                      break;
+                    case '3':
+                      weatherState = '눈';
+                      break;
+                    case '4':
+                      weatherState = '소나기';
+                      break;
+                    default:
+                      weatherState = '';
+                      break;
+                  }
+
+                  weatherData['State'] = weatherState;
+                }
+              }
+
+              var dataset = weatherData['What'] + ' ' + weatherData['State'];
+              console.log(dataset);
+              performSearch(dataset);
+            })
+            .catch(error => {
+              console.log("날씨 정보 요청 실패: ", error.response?.data);
+            });
+        });
+      } else {
+        console.log("Geolocation을 지원하지 않는 브라우저입니다.");
+      }
+    }
+
+    function performSearch(dataset) {
+      const searchUrl = 'http://localhost:50000/search?dataset=' + dataset;
+
+      axios.get(searchUrl, {
+        headers: {
+          Accept: 'application/json'
+        }
+      })
+        .then(response => {
+          const result = response.data;
+          displayResult(result);
+
+          const linkUrlElements = document.getElementsByClassName("link-url");
+
+          for (let i = 0; i < result.linkUrls.length; i++) {
+            linkUrlElements[i].href = result.linkUrls[i];
+          }
+        })
+        .catch(error => {
+          console.log("검색 요청 실패: ", error.response?.data);
+        });
+    }
+
+    function displayResult(result) {
+        // let index = 0;
+        // for(let imageUrl of result.imageUrls) {
+        //   const resultDiv = document.getElementById("rec1");
+
+        // const containerDiv = document.createElement("div");
+        // containerDiv.classList.add("result-container");
+        //   if(index < 3) {
+        //     const itemDiv = document.createElement("div");
+        //     itemDiv.classList.add("item");
+
+        //     const imageElement = document.createElement("img");
+        //     imageElement.src = imageUrl;
+        //     imageElement.width = 200;
+        //     imageElement.height = 200;
+        //     itemDiv.appendChild(imageElement);
+
+        //     if (index < 3) {
+        //         const textElement = document.createElement("p");
+        //         textElement.textContent = result.text[index];
+        //         itemDiv.appendChild(textElement);
+
+        //         const linkUrlElement = document.createElement("a");
+        //         linkUrlElement.classList.add("link-url");
+        //         linkUrlElement.href = result.linkUrls[index]; 
+        //         linkUrlElement.target = "_blank"; 
+        //         linkUrlElement.textContent = "레시피 바로가기"; 
+        //         itemDiv.appendChild(linkUrlElement);
+        //     }
+
+        //     containerDiv.appendChild(itemDiv);
+        //  }
+        // }
+        let resultDiv;
+        let containerDiv;
+        result.imageUrls.forEach((imageUrl, index) => {
+          resultDiv = document.getElementById("rec" + index);
+          if(index < 3) {
+            const itemDiv = document.createElement("div");
+            itemDiv.classList.add("item");
+
+            const imageElement = document.createElement("img");
+            imageElement.src = imageUrl;
+            imageElement.width = 200;
+            imageElement.height = 200;
+            resultDiv.appendChild(imageElement);
+
+            if (index < 3) {
+                const textElement = document.createElement("p");
+                textElement.textContent = result.text[index];
+                resultDiv.appendChild(textElement);
+
+                const linkUrlElement = document.createElement("a");
+                linkUrlElement.classList.add("link-url");
+                linkUrlElement.href = result.linkUrls[index]; 
+                linkUrlElement.target = "_blank"; 
+                linkUrlElement.textContent = "레시피 바로가기"; 
+                resultDiv.appendChild(linkUrlElement);
+            }
+
+            
+            //resultDiv.appendChild(itemDiv);
+         }
+            
+        });
+
+        
+    }
+      
+        
+
+  </script>
+</body>
+</html>

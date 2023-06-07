@@ -1,0 +1,112 @@
+[
+  {
+    "id": "123",
+    "password": "123",
+    "nickname": "123",
+    "cookingMethods": [
+      "굽기"
+    ],
+    "allergens": [
+      "대두"
+    ],
+    "dietPreferences": [],
+    "mbti": {
+      "riceOrWheat": "wheat",
+      "skillLevel": "high",
+      "isVegeterain": "high",
+      "speed": "fast"
+    }
+  },
+  {
+    "id": "ㅌㅊ",
+    "password": "xc",
+    "nickname": "xc",
+    "cookingMethods": [
+      "굽기",
+      "볶음"
+    ],
+    "allergens": [
+      "대두"
+    ],
+    "dietPreferences": [],
+    "mbti": {
+      "riceOrWheat": "wheat",
+      "skillLevel": "low",
+      "isVegeterain": "low",
+      "speed": "fast"
+    }
+  },
+  {
+    "id": "hayeon0311",
+    "password": "hayeon0311",
+    "nickname": "주하연",
+    "cookingMethods": [],
+    "allergens": [],
+    "dietPreference": "고단백",
+    "mbti": {
+      "riceOrWheat": "rice",
+      "skillLevel": "low",
+      "isVegeterain": "yes",
+      "speed": "fast"
+    }
+  },
+  {
+    "id": "test1",
+    "password": "test1",
+    "nickname": "test1",
+    "cookingMethods": [
+      "무침",
+      "데치기",
+      "비빔"
+    ],
+    "allergens": [
+      "땅콩"
+    ],
+    "dietPreference": "저칼로리",
+    "mbti": {
+      "riceOrWheat": "wheat",
+      "skillLevel": "low",
+      "isVegeterain": "no",
+      "speed": "slow"
+    }
+  },
+  {
+    "id": "bbang",
+    "password": "bbang",
+    "nickname": "빵빵이",
+    "cookingMethods": [
+      "굽기",
+      "절임",
+      "무침"
+    ],
+    "allergens": [
+      "키위"
+    ],
+    "dietPreference": "고단백",
+    "mbti": {
+      "riceOrWheat": "rice",
+      "skillLevel": "high",
+      "isVegeterain": "no",
+      "speed": "slow"
+    }
+  },
+  {
+    "id": "123.",
+    "password": "123.",
+    "nickname": "123.",
+    "cookingMethods": [
+      "굽기",
+      "무침"
+    ],
+    "allergens": [
+      "계란"
+    ],
+    "dietPreference": "저염",
+    "mbti": {
+      "riceOrWheat": "wheat",
+      "skillLevel": "low",
+      "isVegeterain": "no",
+      "speed": "slow"
+    }
+  }
+]
